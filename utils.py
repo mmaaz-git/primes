@@ -23,6 +23,16 @@ PRIMES_UPTO_1000 = {
 
 def log2(x): return log(x, 2)
 
+def prime_sieve(limit):
+    sieve = [True] * (limit + 1)
+    sieve[0:2] = [False, False]
+    for i in range(2, limit + 1):
+        if sieve[i]:
+            yield i
+            for j in range(i*i, limit + 1, i):
+                sieve[j] = False
+
+
 def int_root(x, y):
     """
     Computes the integer z s.t. x^(1/y) = z.
@@ -34,10 +44,17 @@ def int_root(x, y):
     if y==1: return x
     if x<y: return -1 # not an int
 
-    lo, hi = 1, x
+    lo, hi = 1, 1 << ((x.bit_length() + y - 1) // y)
     while lo <= hi:
         mid = (lo + hi) // 2
-        val = mid**y
+
+        # compute mid^y with early exit
+        val = 1
+        for _ in range(y):
+            val *= mid
+            if val > x:
+                break
+
         if val==x:
             return mid
         if val<x:
@@ -48,35 +65,50 @@ def int_root(x, y):
     return -1
 
 def is_perfect_power(x):
-    for b in range(2, floor(log2(x))+1):
-        if b<=1000 and b not in PRIMES_UPTO_1000: continue
+    for b in prime_sieve(floor(log2(x))+1):
         if int_root(x, b) != -1: return True
     return False
 
-def poly_pow_mod(base, exp, Q, mod):
+def poly_mul_modQ(a, b, q, n):
     """
-    Compute base^exp modulo Q(z), with coefficients reduced modulo mod.
-    All polys must live in domain=ZZ. We apply coeff-mod via .trunc(mod).
+    Multiply polynomials a and b in Z_n[z]/(Q).
+    a, b: lists of length d
+    q:    coefficients of Q (length d)
     """
-    from sympy import Poly, ZZ
+    d = len(q)
+    tmp = [0] * (2*d - 1)
 
-    z = base.gens[0]
+    # convolution
+    for i in range(d):
+        ai = a[i]
+        if ai == 0:
+            continue
+        for j in range(d):
+            tmp[i + j] = (tmp[i + j] + ai * b[j]) % n
 
-    # Ensure we're in ZZ and coefficients are reduced mod mod
-    base = Poly(base.as_expr(), z, domain=ZZ).trunc(mod)
-    Q    = Poly(Q.as_expr(),    z, domain=ZZ).trunc(mod)
+    # reduce degrees >= d using z^d = -(q[d-1]z^{d-1}+...+q[0])
+    for k in range(2*d - 2, d - 1, -1):
+        c = tmp[k]
+        if c == 0:
+            continue
+        t = k - d
+        for i in range(d):
+            tmp[i + t] = (tmp[i + t] - c * q[i]) % n
+        tmp[k] = 0
 
-    result = Poly(1, z, domain=ZZ).trunc(mod)
+    return tmp[:d]
 
-    # Reduce base modulo Q first (over ZZ), then coeff-reduce mod mod
-    base = base.rem(Q).trunc(mod)
+def poly_pow_modQ(base, exp, q, n):
+    d = len(q)
+    res = [0]*d
+    res[0] = 1   # constant 1
 
+    cur = base[:]
     e = exp
     while e > 0:
         if e & 1:
-            result = (result * base).rem(Q).trunc(mod)
+            res = poly_mul_modQ(res, cur, q, n)
         e >>= 1
         if e:
-            base = (base * base).rem(Q).trunc(mod)
-
-    return result
+            cur = poly_mul_modQ(cur, cur, q, n)
+    return res
