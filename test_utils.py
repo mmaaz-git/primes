@@ -1,4 +1,4 @@
-from utils import log2, int_root
+from utils import log2, int_root, is_perfect_power
 
 def test_log2():
     assert log2(2) == 1
@@ -12,3 +12,9 @@ def test_int_root():
     assert int_root(28,3) == -1
     assert int_root(0,5) == 0
     assert int_root(5,1) == 5
+
+def test_is_perfect_power():
+    assert is_perfect_power(27) == True
+    assert is_perfect_power(28) == False
+    assert is_perfect_power(37**53) == True
+    assert is_perfect_power(37**53+1) == False

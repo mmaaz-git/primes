@@ -26,3 +26,8 @@ def int_root(x, y):
             hi = mid - 1
 
     return -1
+
+def is_perfect_power(x):
+    for b in range(2, floor(log2(x))+1):
+        if int_root(x, b) != -1: return True
+    return False
