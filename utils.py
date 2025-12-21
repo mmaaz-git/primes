@@ -32,7 +32,6 @@ def prime_sieve(limit):
             for j in range(i*i, limit + 1, i):
                 sieve[j] = False
 
-
 def int_root(x, y):
     """
     Computes the integer z s.t. x^(1/y) = z.
