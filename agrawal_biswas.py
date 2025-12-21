@@ -6,9 +6,8 @@ from sympy.polys import Poly
 from random import randint
 
 def is_prime(x):
-    PRIMES = [2,3,5,7,11,13]
-    if x in PRIMES: return True
-    if any(x % n == 0 for n in PRIMES): return False
+    if x in PRIMES_UPTO_1000: return True
+    if any(x % n == 0 for n in PRIMES_UPTO_1000): return False
     if is_perfect_power(x): return False
 
     # form the polynomial P(z) = (1+z)^x - 1 - z^x
