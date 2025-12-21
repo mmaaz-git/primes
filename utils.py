@@ -52,3 +52,31 @@ def is_perfect_power(x):
         if b<=1000 and b not in PRIMES_UPTO_1000: continue
         if int_root(x, b) != -1: return True
     return False
+
+def poly_pow_mod(base, exp, Q, mod):
+    """
+    Compute base^exp modulo Q(z), with coefficients reduced modulo mod.
+    All polys must live in domain=ZZ. We apply coeff-mod via .trunc(mod).
+    """
+    from sympy import Poly, ZZ
+
+    z = base.gens[0]
+
+    # Ensure we're in ZZ and coefficients are reduced mod mod
+    base = Poly(base.as_expr(), z, domain=ZZ).trunc(mod)
+    Q    = Poly(Q.as_expr(),    z, domain=ZZ).trunc(mod)
+
+    result = Poly(1, z, domain=ZZ).trunc(mod)
+
+    # Reduce base modulo Q first (over ZZ), then coeff-reduce mod mod
+    base = base.rem(Q).trunc(mod)
+
+    e = exp
+    while e > 0:
+        if e & 1:
+            result = (result * base).rem(Q).trunc(mod)
+        e >>= 1
+        if e:
+            base = (base * base).rem(Q).trunc(mod)
+
+    return result
