@@ -7,5 +7,3 @@ def is_prime(x):
     for _ in range(x-2):
         s = (s**2 - 2) % M
     return s == 0
-
-print(is_prime(86243))
