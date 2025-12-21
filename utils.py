@@ -111,3 +111,22 @@ def poly_pow_modQ(base, exp, q, n):
         if e:
             cur = poly_mul_modQ(cur, cur, q, n)
     return res
+
+def mersenne_reduce(a, p, M):
+    """Return a mod (2^p-1) using folding reduction (fast, division-free)."""
+    # ensure non-negative
+    if a < 0:
+        a %= M
+        return a
+
+    # fold high bits down
+    while a >> p:
+        a = (a & M) + (a >> p)
+
+    # now a < 2^p + something small; finish with at most a couple subtractions
+    if a >= M:
+        a -= M
+        if a >= M:
+            a -= M
+
+    return a # in [0, M-1]
