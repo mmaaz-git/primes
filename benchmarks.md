@@ -2,6 +2,7 @@
 
 ## Lucas-Lehmer, Dec 21 2025
 
+```
 Testing if 2^31-1 is prime...
 result: True
 elapsed: 0.00 sec
@@ -71,3 +72,4 @@ elapsed: 253.55 sec
 Testing if 2^132049-1 is prime...
 result: True
 elapsed: 427.07 sec
+```
