@@ -9,3 +9,5 @@ Currently implemented:
 TODO:
 - Miller-Rabin
 - AKS
+
+See `benchmarks.txt` for some benchmarks. I've checked some decently large primes. Still could optimize more.
