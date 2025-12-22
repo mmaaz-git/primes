@@ -28,8 +28,7 @@ for num in [
         110503,
         132049,
         216091,
-        756839,
-        859433,
+        756839, # this takes ~40min, beware!
     ]:
     print(f"Testing if 2^{num}-1 is prime...")
     start = time()

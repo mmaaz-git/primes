@@ -7,8 +7,7 @@ Currently implemented:
 - Lucas-Lehmer, for prime testing of numbers of the form 2^n-1 (n prime)
 
 TODO:
-- optimize Lucas-Lehmer further
 - implement Miller-Rabin
 - implement AKS
 
-See `benchmarks.txt` for some benchmarking. I've checked `2^132049-1` is prime in 427.07 sec with Lucas-Lehmer.
+See `benchmarks.txt` for some benchmarking. I've checked `2^756839-1` (227,832 digits) is prime in 42.88 min with Lucas-Lehmer.
