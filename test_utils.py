@@ -1,4 +1,4 @@
-from utils import log2, int_root, is_perfect_power, mult_ord, gcd, are_coprime
+from utils import log2, int_root, is_perfect_power, mult_ord, gcd, are_coprime, euler_totient
 
 def test_log2():
     assert log2(2) == 1
@@ -31,3 +31,7 @@ def test_gcd():
 def test_are_coprime():
     assert are_coprime(30, 31) == True
     assert are_coprime(24, 16) == False
+
+def test_euler_totient():
+    assert euler_totient(1) == 1
+    assert euler_totient(9) == 6

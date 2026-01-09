@@ -148,3 +148,6 @@ def gcd(a, b):
 
 def are_coprime(a, b):
     return gcd(a, b) == 1
+
+def euler_totient(x):
+    return sum(are_coprime(x, k) for k in range(1, x+1))
