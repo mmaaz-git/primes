@@ -20,6 +20,6 @@ def test_is_perfect_power():
     assert is_perfect_power(37**53+1) == False
 
 def test_mult_ord():
-    assert ord(6, 5) == 1
-    assert ord(5, 6) == 2
-    assert ord(4, 7) == 3
+    assert mult_ord(6, 5) == 1
+    assert mult_ord(5, 6) == 2
+    assert mult_ord(4, 7) == 3
