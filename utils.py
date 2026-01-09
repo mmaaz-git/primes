@@ -132,7 +132,8 @@ def mersenne_reduce(a, p, M):
     return a # in [0, M-1]
 
 def mult_ord(a, n):
-    """ord_n (a) = smallest pos int k s.t a^k = 1 (mod n)"""
+    """ord_n (a), or mult order of a mod n, = smallest pos int k s.t a^k = 1 (mod n)"""
+    assert n > 1, "modulus must be larger than 1"
     if a % n == 1: return 1
     a_, k = a, 1
     while a_ % n != 1:
