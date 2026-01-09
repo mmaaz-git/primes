@@ -17,6 +17,6 @@ def is_prime(x, k=10):
             if z==1 and y!=1 and y!=x-1: return False
             y = z
 
-        if y!=1: return False
+        if z!=1: return False
 
     return True
