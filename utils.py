@@ -131,7 +131,7 @@ def mersenne_reduce(a, p, M):
 
     return a # in [0, M-1]
 
-def ord(a, n):
+def mult_ord(a, n):
     """ord_n (a) = smallest pos int k s.t a^k = 1 (mod n)"""
     if a % n == 1: return 1
     a_, k = a, 1
