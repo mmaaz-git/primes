@@ -1,4 +1,4 @@
-from utils import log2, int_root, is_perfect_power, mult_ord
+from utils import log2, int_root, is_perfect_power, mult_ord, gcd, are_coprime
 
 def test_log2():
     assert log2(2) == 1
@@ -23,3 +23,11 @@ def test_mult_ord():
     assert mult_ord(6, 5) == 1
     assert mult_ord(5, 6) == 2
     assert mult_ord(4, 7) == 3
+
+def test_gcd():
+    assert gcd(29, 25) == 1
+    assert gcd(24, 16) == 8
+
+def test_are_coprime():
+    assert are_coprime(30, 31) == True
+    assert are_coprime(24, 16) == False
